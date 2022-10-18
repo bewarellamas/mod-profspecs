@@ -40,30 +40,30 @@ public:
 
     bool OnGossipHello(Player* player, Creature* creature) override
     {
-        if (sConfigMgr->GetOption<bool>("ProfSpec.Enable", true))
+        if (!sConfigMgr->GetOption<bool>("ProfSpec.Enable", true))
         {
             return false;
         }
 
         player->PlayerTalkClass->ClearMenus();
 
-        if (!(player->HasSkill(SKILL_ALCHEMY) && EnableAlch))
+        if ((player->HasSkill(SKILL_ALCHEMY) && EnableAlch))
         {
             AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Alchemy", GOSSIP_SENDER_MAIN, SKILL_ALCHEMY);
         }
-        if (!(player->HasSkill(SKILL_BLACKSMITHING) && EnableBSmith))
+        if ((player->HasSkill(SKILL_BLACKSMITHING) && EnableBSmith))
         {
             AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Blacksmithing", GOSSIP_SENDER_MAIN, SKILL_BLACKSMITHING);
         }
-        if (!(player->HasSkill(SKILL_ENGINEERING) && EnableEng))
+        if ((player->HasSkill(SKILL_ENGINEERING) && EnableEng))
         {
             AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Engineering", GOSSIP_SENDER_MAIN, SKILL_ENGINEERING);
         }
-        if (!(player->HasSkill(SKILL_LEATHERWORKING) && EnableLeather))
+        if ((player->HasSkill(SKILL_LEATHERWORKING) && EnableLeather))
         {
             AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Leatherworking", GOSSIP_SENDER_MAIN, SKILL_LEATHERWORKING);
         }
-        if (!(player->HasSkill(SKILL_TAILORING) && EnableTailor))
+        if ((player->HasSkill(SKILL_TAILORING) && EnableTailor))
         {
             AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Tailoring", GOSSIP_SENDER_MAIN, SKILL_TAILORING);
         }
@@ -89,7 +89,7 @@ public:
 
             case SKILL_BLACKSMITHING:
                 AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Armorsmith", GOSSIP_SENDER_INFO, BSMITH_ARMOR);
-                if (player->HasSkill(BSMITH_WEAPON))
+                if (player->HasSpell(BSMITH_WEAPON))
                 {
                     AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Master Swordsmith", GOSSIP_SENDER_INFO, BSMITH_SWORD);
                     AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Master Axesmith", GOSSIP_SENDER_INFO, BSMITH_AXE);
@@ -144,7 +144,7 @@ public:
             }
 
             CloseGossipMenuFor(player);
-
+            return true;
         }
 
     }
